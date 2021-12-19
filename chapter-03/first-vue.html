@@ -4,8 +4,7 @@
     <title>Vue.js Pet Depot</title>
     <script src="https://unpkg.com/vue"></script>
     <link rel="stylesheet" type="text/css" href="assets/css/app.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/
-bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 
 <body>
@@ -24,10 +23,10 @@ bootstrap.min.css" crossorigin="anonymous">
                 </div>
                 <div class="col col-expand">
                     <h1 v-text="product.title"></h1>
-                    <h1 v-html="product.description"></h1>
-                    <h1 class="price">
+                    <p v-html="product.description"></p>
+                    <p class="price">
                         {{ product.price | formatPrice}}
-                    </h1>
+                    </p>
 
                 </div>
             </div>
