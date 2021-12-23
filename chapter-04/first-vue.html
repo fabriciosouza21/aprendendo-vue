@@ -1,0 +1,78 @@
+<html>
+
+<head>
+    <title>Vue.js Pet Depot</title>
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/app.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="app">
+
+        <head>
+            <h1 v-text="sitename"></h1>
+            <h2> bem vindo {{ sitename }}</h2>
+        </head>
+        <main>
+            <div class="row product">
+                <div class="col">
+                    <figure>
+                        <img :src="product.image" alt="">
+                    </figure>
+                </div>
+                <div class="col col-expand">
+                    <h1 v-text="product.title"></h1>
+                    <p v-html="product.description"></p>
+                    <p class="price">
+                        {{ product.price | formatPrice}}
+                    </p>
+                    <button class="btn btn-primary btn-lg" v-on:click="addToCart">
+                        adicionar ao carrinho
+                    </button>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+    <script type="text/javascript">
+        var APP_LOG_LIFECYCLE = false;
+        var webstore = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    sitename: 'Vue.js Pet Depot',
+                    product: {
+                        id: 1001,
+                        title: "comida para gato",
+                        description: "comidas para gatos delisiosa <em> inrresistivel </em>",
+                        price: 20.00,
+                        image: "assets/images/product-fullsize.png"
+                    },
+                    cart: [],
+                }
+            },
+            methods: {
+                addToCart: function() {
+                    this.cart.push(this.product);
+                }
+            },
+            filters: {
+                formatPrice: function(price) {
+                    if (!parseFloat(price)) {
+                        return 'R$ 0.00';
+                    }
+                    return price.toLocaleString('pt-br', {
+                        style: 'currency',
+                        currency: 'BRL'
+                    });
+
+                }
+            }
+
+        });
+    </script>
+</body>
+
+</html>
