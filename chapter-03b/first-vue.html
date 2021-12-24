@@ -1,0 +1,114 @@
+<html lang="br">
+
+<head>
+    <title>Vue.js Pet Depot</title>
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/app.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="app">
+
+        <head>
+            <div class="navbar navbar-default">
+                <div class="navbar-header">
+                    <h2> {{ sitename }}</h2>
+                </div>
+                <div class="nav navbar-nav navbar-right cart">
+                    <button type="button" class="btn btn-primary btn-lg" v-on:click="showCheckout">
+                        <span class="glyphicon glyphicon-shopping-cart">
+                            {{cartItemCount}}
+                        </span>
+                        Checkout
+                    </button>
+
+                </div>
+            </div>
+        </head>
+        <main>
+            <div class="row product">
+
+                <div v-if="showProduct">
+                    <div class="col-md-2 col-md-offset-1">
+                        <figure>
+                            <img :src="product.image" alt="">
+                        </figure>
+                    </div>
+                    <div class="col-md-6 col-md-offset-2 description">
+                        <h1 v-text="product.title"></h1>
+                        <p v-html="product.description"></p>
+                        <p class="price">
+                            {{ product.price | formatPrice}}
+                        </p>
+                        <button class="default btn btn-primary btn-lg" v-on:click="addToCart" v-if="canAddTocart">
+                        adicionar ao carrinho
+                    </button>
+
+                        <button disabled class="disabled btn btn-primary btn-lg" v-on:click="addToCart" v-else>
+                        adicionar ao carrinho
+                    </button>
+
+                    </div>
+
+                </div>
+                <div v-else>
+
+                </div>
+            </div>
+
+        </main>
+    </div>
+    <script type="text/javascript">
+        var APP_LOG_LIFECYCLE = false;
+        var webstore = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    sitename: 'Vue.js Pet Depot',
+                    product: {
+                        id: 1001,
+                        title: "comida para gato",
+                        description: "comidas para gatos delisiosa <em> inrresistivel </em>",
+                        price: 20.00,
+                        image: "assets/images/product-fullsize.png",
+                        availableInvetory: 7
+                    },
+                    cart: [],
+                    showProduct: true,
+                }
+            },
+            methods: {
+                addToCart: function() {
+                    this.cart.push(this.product);
+                },
+                showCheckout: function() {
+                    this.showProduct = this.showProduct ? false : true;
+                }
+            },
+            filters: {
+                formatPrice: function(price) {
+                    if (!parseFloat(price)) {
+                        return 'R$ 0.00';
+                    }
+                    return price.toLocaleString('pt-br', {
+                        style: 'currency',
+                        currency: 'BRL'
+                    });
+
+                }
+            },
+            computed: {
+                cartItemCount: function() {
+                    return this.cart.length;
+                },
+                canAddTocart: function() {
+                    return this.cartItemCount < this.product.availableInvetory;
+                }
+            }
+
+        });
+    </script>
+</body>
+
+</html>
